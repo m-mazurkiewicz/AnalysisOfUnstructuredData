@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-import lxml
-import requests
 import networkx as nx
 import itertools
 import matplotlib.pyplot as plt
@@ -25,7 +23,7 @@ for i in range(len(authors)):
             author = authors[i].find_all('author')[j].get_text()
             author = re.sub(' ', '', author)
             author = re.sub('Wylomanska', 'Wyłomańska', author)
-            author = re.sub('Loch', 'Loch-Olszewska', author)
+            author = re.sub('Loch-Olszewska', 'Loch', author)
             author = re.sub('Zak', 'Żak', author)
             new_list.append(author)
     authors[i] = new_list
@@ -34,8 +32,8 @@ edges = []
 for i in range(len(authors)):
     for pair in itertools.combinations(authors[i],2):
         edges.append(tuple(sorted(pair)))
-
 edges_dict = Counter(edges)
+
 nodes_dict = dict()
 for i in range(len(authors)):
     nodes_dict = Counter(authors[i]) + Counter(nodes_dict)
